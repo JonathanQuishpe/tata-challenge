@@ -1,0 +1,55 @@
+<div class="list-container" *ngIf="!loading">
+    <div class="search">
+        <input type="text" placeholder="Search ...." [(ngModel)]="searchTerm" (input)="filterProducts()">
+        <button (click)="goToCreate()" class="btn-primary">Agregar</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Logo</th>
+                <th>Nombre del producto</th>
+                <th>Descripción</th>
+                <th>Fecha de libearación</th>
+                <th>Fecha de restructuración</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of filtered">
+                <td>
+                    <select (change)="onActionSelected($event, product)">
+                        <option value="0">Acciones</option>
+                        <option value="update">Editar</option>
+                        <option value="delete">Eliminar</option>
+                    </select>
+                </td>
+                <td>
+                    <img src="{{product.logo}}" [alt]="product.name" class="logo">
+                </td>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.date_release}}</td>
+                <td>{{product.date_revision}}</td>
+            </tr>
+            <div *ngIf="filtered.length === 0">
+                <p>No hay resultados</p>
+            </div>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="filtered.length > 0">
+        <p>
+            {{ perPage }} Resultados
+        </p>
+        <select (change)="onActionPagination($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+
+</div>
+<app-skeleton *ngIf="loading"></app-skeleton>
+
+<app-modal-delete [isVisible]="isModalVisible" (closeModalEvent)="closeModal()" (refreshTable)="refresh()"
+    [product]="selectedProduct"></app-modal-delete>

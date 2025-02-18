@@ -1,0 +1,95 @@
+<div class="add-container">
+    <div class="form">
+        <h1>
+            Formulario de registro
+        </h1>
+        <div class="error-message" *ngIf="errorMessages">
+            {{errorMessages}}
+        </div>
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="form-group">
+                    <label>Id</label>
+                    <input type="text" formControlName="id" class="form-input"
+                        [ngClass]="{'invalid': productForm.get('id')?.invalid && productForm.get('id')?.touched, 'valid': productForm.get('id')?.valid && productForm.get('id')?.touched}">
+                    <div class="error" *ngIf="productForm.get('id')?.invalid && productForm.get('id')?.touched">
+                        <small *ngIf="productForm.get('id')?.hasError('required')">El ID es obligatorio.</small>
+                        <small *ngIf="productForm.get('id')?.hasError('minlength')">El ID debe tener al menos 3
+                            caracteres.</small>
+                        <small *ngIf="productForm.get('id')?.hasError('maxlength')">El ID no puede tener más de 10
+                            caracteres.</small>
+                        <small *ngIf="productForm.get('id')?.hasError('duplicateId')">ID inválido</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" formControlName="name" class="form-input"
+                        [ngClass]="{'invalid': productForm.get('name')?.invalid && productForm.get('name')?.touched, 'valid': productForm.get('name')?.valid && productForm.get('name')?.touched}">
+                    <div class="error" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+                        <small *ngIf="productForm.get('name')?.hasError('required')">El nombre es obligatorio.</small>
+                        <small *ngIf="productForm.get('name')?.hasError('minlength')">El nombre debe tener al menos 5
+                            caracteres.</small>
+                        <small *ngIf="productForm.get('name')?.hasError('maxlength')">El nombre no puede tener más de
+                            100
+                            caracteres.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" formControlName="description" class="form-input"
+                        [ngClass]="{'invalid': productForm.get('description')?.invalid && productForm.get('description')?.touched, 'valid': productForm.get('description')?.valid && productForm.get('description')?.touched}">
+                    <div class="error"
+                        *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched">
+                        <small *ngIf="productForm.get('description')?.hasError('required')">La descripción es
+                            obligatoria.</small>
+                        <small *ngIf="productForm.get('description')?.hasError('minlength')">La descripción debe tener
+                            al
+                            menos 10
+                            caracteres.</small>
+                        <small *ngIf="productForm.get('description')?.hasError('maxlength')">La descripción no puede
+                            tener
+                            más de 100
+                            caracteres.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Logo</label>
+                    <input type="text" formControlName="logo" class="form-input"
+                        [ngClass]="{'invalid': productForm.get('logo')?.invalid && productForm.get('logo')?.touched, 'valid': productForm.get('logo')?.valid && productForm.get('logo')?.touched}">
+                    <div class="error" *ngIf="productForm.get('logo')?.invalid && productForm.get('logo')?.touched">
+                        <small>
+                            El logo es obligatorio
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Fecha de libearación</label>
+                    <input type="date" formControlName="date_release" class="form-input"
+                        [ngClass]="{'invalid': productForm.get('date_release')?.invalid && productForm.get('date_release')?.touched, 'valid': productForm.get('date_release')?.valid && productForm.get('date_release')?.touched}">
+                    <div class="error"
+                        *ngIf="productForm.get('date_release')?.invalid && productForm.get('date_release')?.touched">
+                        <small *ngIf="productForm.get('date_release')?.hasError('required')">La fecha es
+                            obligatoria.</small>
+                        <small *ngIf="productForm.get('date_release')?.hasError('dateInvalid')">La fecha debe ser igual
+                            o
+                            mayor a la fecha
+                            actual.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de liberación</label>
+                    <input type="date" formControlName="date_revision" class="form-input">
+                </div>
+            </div>
+            <div class="section-button">
+                <button type="button" class="btn-secondary" (click)="onReset()">Reiniciar</button>
+                <button type="submit" [disabled]="productForm.invalid || loading" class="btn-primary">Guardar</button>
+                <div class="spinner" *ngIf="loading"></div>
+            </div>
+        </form>
+    </div>
+</div>

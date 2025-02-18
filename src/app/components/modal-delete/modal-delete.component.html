@@ -1,0 +1,13 @@
+<div class="modal" *ngIf="isVisible" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closeModal()">×</span>
+        <p>
+            ¿Estás seguro de eliminar el producto {{product?.name}}?
+        </p>
+        <div class="section-button">
+            <button type="button" (click)="closeModal()" class="btn-secondary" [disabled]="loading">Cancelar</button>
+            <button type="button" class="btn-primary" (click)="deletePoroduct()" [disabled]="loading">Confirmar</button>
+            <div class="spinner" *ngIf="loading"></div>
+        </div>
+    </div>
+</div>
