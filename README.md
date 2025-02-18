@@ -44,9 +44,9 @@ To execute unit tests with the [Jest](https://jestjs.io/) test runner, use the f
 ng test
 ```
 
-## Running unit tests with codecoverage
+## Running unit tests with code coverage
 
-To execute unit tests with codecoverage the [Jest](https://jestjs.io/) test runner, use the following command:
+To execute unit tests with code coverage the [Jest](https://jestjs.io/) test runner, use the following command:
 
 ```bash
 ng test:coverage
