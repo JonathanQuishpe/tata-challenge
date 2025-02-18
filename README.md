@@ -38,21 +38,19 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests with the [Jest](https://jestjs.io/) test runner, use the following command:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Running unit tests with codecoverage
 
-For end-to-end (e2e) testing, run:
+To execute unit tests with codecoverage the [Jest](https://jestjs.io/) test runner, use the following command:
 
 ```bash
-ng e2e
+ng test:coverage
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 
