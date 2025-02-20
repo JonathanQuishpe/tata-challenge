@@ -66,7 +66,9 @@ export class UpdateProductComponent implements OnInit {
       });
     } catch (res: any) {
       const errorResponse: ErrorResponse = res.error;
-      this.errorMessages = errorResponse.message;
+      this.errorMessages = errorResponse.message
+        ? errorResponse.message
+        : 'Problemas al conectar al servidor. Intente más tarde !!!!';
     } finally {
       this.loading = false;
     }
@@ -92,7 +94,9 @@ export class UpdateProductComponent implements OnInit {
         this.router.navigate(['/']);
       } catch (res: any) {
         const errorResponse: ErrorResponse = res.error;
-        this.errorMessages = errorResponse.message;
+        this.errorMessages = errorResponse.message
+        ? errorResponse.message
+        : 'Problemas al conectar al servidor. Intente más tarde !!!!';
       } finally {
         this.loading = false;
       }

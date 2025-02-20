@@ -5,17 +5,17 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ModalDeleteComponent } from "../../components/modal-delete/modal-delete.component";
-import { SkeletonComponent } from "../../components/skeleton/skeleton.component";
+import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
+import { SkeletonComponent } from '../../components/skeleton/skeleton.component';
+import { ErrorResponse } from '../../model/error.model';
 
 @Component({
   selector: 'app-list-product',
   imports: [CommonModule, FormsModule, ModalDeleteComponent, SkeletonComponent],
   templateUrl: './list-product.component.html',
-  styleUrl: './list-product.component.scss'
+  styleUrl: './list-product.component.scss',
 })
 export class ListProductComponent implements OnInit {
-
   searchTerm: string = '';
   products: Product[] = [];
   selectedProduct: Product | null = null;
@@ -23,10 +23,14 @@ export class ListProductComponent implements OnInit {
   loading: boolean = false;
   perPage: number = 5;
   isModalVisible: boolean = false;
+  errorMessages: string = '';
+  hasError: boolean = false; 
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
+    this.errorMessages = '';
+    this.hasError = false;
     this.loadProducts();
   }
 
@@ -36,7 +40,13 @@ export class ListProductComponent implements OnInit {
       const data = await firstValueFrom(this.productService.getProducts());
       this.products = data;
       this.filtered = this.products.slice(0, this.perPage);
-    } catch (error) {
+    } catch (res: any) {
+      const errorResponse: ErrorResponse = res.error;
+      this.hasError = true;
+      this.errorMessages = errorResponse.message
+        ? errorResponse.message
+        : 'Problemas al conectar al servidor. Intente más tarde !!!!';
+      this;
     } finally {
       this.loading = false;
     }
@@ -66,9 +76,12 @@ export class ListProductComponent implements OnInit {
     if (this.searchTerm.trim() === '') {
       this.filtered = [...this.products];
     } else {
-      this.filtered = this.products.filter(product =>
-        product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      this.filtered = this.products.filter(
+        (product) =>
+          product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          product.description
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
       );
     }
   }

@@ -1,4 +1,4 @@
-<div class="list-container" *ngIf="!loading">
+<div class="list-container" *ngIf="!loading && !hasError">
     <div class="search">
         <input type="text" placeholder="Search ...." [(ngModel)]="searchTerm" (input)="filterProducts()">
         <button (click)="goToCreate()" class="btn-primary">Agregar</button>
@@ -50,6 +50,9 @@
 
 </div>
 <app-skeleton *ngIf="loading"></app-skeleton>
+<div *ngIf="hasError" class="alert-danger">
+    {{errorMessages}}
+</div>
 
 <app-modal-delete [isVisible]="isModalVisible" (closeModalEvent)="closeModal()" (refreshTable)="refresh()"
     [product]="selectedProduct"></app-modal-delete>
